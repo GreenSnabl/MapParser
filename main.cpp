@@ -24,7 +24,7 @@ using namespace std;
 int main(int argc, char** argv) {
     
     Parser p;
-    p.readFile("./Maps/Map1.txt");
+    p.readFile("./Maps/level1.txt");
     
     DummyMap dm;
     dm.loadFromFile(p.m_stringVec);

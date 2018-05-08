@@ -14,3 +14,23 @@
 #include "DummyMap.h"
 
 
+DummyMap::DummyMap() {}
+
+const std::vector<std::string> DummyMap::items{
+    "GreatSword",
+    "ArmingSword",
+    "Club",
+    "RapierAndDagger",
+    "Gambeson",
+    "MailArmour",
+    "Shield",
+    "FullPlateArmour"};
+
+const std::vector<std::string> DummyMap::specialTiles{
+    "Door",
+    "Switch",
+    "Trap",
+    "Lever"};
+
+
+

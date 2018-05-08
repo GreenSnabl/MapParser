@@ -40,19 +40,20 @@ class StationaryController : public Controller {
 
 class Character {
 public:
-    char sign;
-    int stamina;
-    int strength;
-    Position pos;
-    Controller* m_controller;
+    Character(char sign, Position pos, int stamina, int strength, const std::string& controller) : m_sign{sign}, m_stamina{stamina}, m_strength{strength}, m_controller{controller} {} 
+    char m_sign;
+    int m_stamina;
+    int m_strength;
+    Position m_pos;
+    std::string m_controller;
 };
-
+/*
 class Player : public Character {
 };
 
 class Enemy : public Character {
 };
-
+*/
 struct Item {
     std::string m_str = "cool";
 };
@@ -63,14 +64,11 @@ struct Tile {
     Item* m_item;
     Position pos;
     char m_sign;
-
-
 };
 
 struct DummyMap {
 
-    DummyMap() {
-    }
+    DummyMap();
 
     DummyMap(const std::vector<std::string>& map);
 
@@ -148,8 +146,12 @@ bool DummyMap::loadEntities(const std::string& str) {
     ss >> name;
     cout << name << endl;
 
-    if (name == "Character")
-        makeCharacter(name, str);
+    if (name == "Character") {
+        if (Character* character = makeCharacter(name, str)) {
+            m_charVec.push_back(character);
+            cout << "Character " << character->m_sign <<  " { " << character->m_pos.x << "," << character->m_pos.y << "} " << character->m_controller << endl;
+        }
+    }
     else if (isSpecialTile(name))
         makeTile(name, str);
     else if (isItem(name))
@@ -165,30 +167,35 @@ void DummyMap::print() const {
     }
 }
 
-Character* makeCharacter(const std::string& name, const std::string& data);
+Character* DummyMap::makeCharacter(const std::string& name, const std::string& data)
+{
+    std::stringstream ss;
+    ss << data;
+    std::string name1, controllerType;
+    Position pos;
+    char sign;
+    int strength, stamina;
+    ss >> name1 >> sign >> pos.y >> pos.x >> controllerType >> strength >> stamina;  
+    if (controllerType == "StationaryController") {
+        return new Character(sign, pos, strength, stamina, controllerType);
+    }
+    else if (controllerType == "ConsoleController") {
+        return new Character(sign, pos, strength, stamina, controllerType);
+    }
+    return nullptr;
+}
 
-Item* makeItem(const std::string& name, const std::string& data);
+Item* DummyMap::makeItem(const std::string& name, const std::string& data) {
+    ;
+}
 
-Tile* makeTile(const std::string& name, const std::string& data);
+Tile* DummyMap::makeTile(const std::string& name, const std::string& data)
+{
+    ;
+}
 
 
 
-
-const std::vector<std::string> DummyMap::items{
-    "GreatSword",
-    "ArmingSword",
-    "Club",
-    "RapierAndDagger",
-    "Gambeson",
-    "MailArmour",
-    "Shield",
-    "FullPlateArmour"};
-
-const std::vector<std::string> DummyMap::specialTiles{
-    "Door",
-    "Switch",
-    "Trap",
-    "Lever"};
 
 
 
