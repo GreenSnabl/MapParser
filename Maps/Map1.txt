@@ -1,0 +1,15 @@
+10 10
+##########
+####...#.#
+##.......#
+####.#####
+#........#
+#........#
+####.#####
+#........#
+#........#
+##########
+Character @ 8 2 ConsoleController 7 6
+Character % 5 4 AiController 6 5
+Switch 7 5 Door 6 4 Door 6 4
+Switch 1 5 Door 2 7
